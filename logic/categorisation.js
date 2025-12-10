@@ -6,7 +6,7 @@ import ollama from "ollama";
  */
 
 export async function analyzeReviews(languageModel = "gemma3", chunkSize = 30) {
-    const raw = JSON.parse(fs.readFileSync("reviews_clean.json", "utf8"));
+    const raw = JSON.parse(fs.readFileSync("./data/reviews_clean.json", "utf8"));
     const reviews = raw.data || raw;
 
     const results = [];
@@ -21,7 +21,7 @@ export async function analyzeReviews(languageModel = "gemma3", chunkSize = 30) {
     }
 
     const merged = await mergeAllReviews(results, languageModel);
-    fs.writeFileSync("reviews_analysis.json", JSON.stringify({ merged }, null, 2));
+    fs.writeFileSync("./data/reviews_analysis.json", JSON.stringify({ merged }, null, 2));
 
     console.log("DONE!");
 }

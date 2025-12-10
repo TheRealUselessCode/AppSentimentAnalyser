@@ -15,7 +15,7 @@ export async function getReviews(appId, numberOfReviews, language) {
 
   // komplette Antwort in eine JSON-Datei schreiben
   fs.writeFileSync(
-    "reviews.json",
+    "./data/reviews.json",
     JSON.stringify(data, null, 2),   // schön formatiert
     "utf8"
   );

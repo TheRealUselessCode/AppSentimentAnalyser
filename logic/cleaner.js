@@ -5,7 +5,7 @@ import fs from "fs";
  */
 
 export function cleanReviews() {
-  const raw = JSON.parse(fs.readFileSync("reviews.json", "utf8"));
+  const raw = JSON.parse(fs.readFileSync("./data/reviews.json", "utf8"));
   const reviews = raw.data || raw;   // Falls Struktur unterschiedlich ist
 
   const cleaned = reviews.map(r => ({
@@ -17,7 +17,7 @@ export function cleanReviews() {
     version: r.version
   }));
 
-  fs.writeFileSync("reviews_clean.json", JSON.stringify(cleaned, null, 2), "utf8");
+  fs.writeFileSync("./data/reviews_clean.json", JSON.stringify(cleaned, null, 2), "utf8");
 
   console.log("Fertig! reviews_clean.json wurde erstellt.");
 }

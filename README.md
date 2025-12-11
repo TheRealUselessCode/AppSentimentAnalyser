@@ -7,7 +7,7 @@ Pull Google Play Store reviews for any app, clean them, and analyze sentiment wi
 ## Prerequisites
 
 - Install Ollama: https://ollama.com/download
-- Install an Ollama model (e.g., `llama3`, `mistral`).
+- Install an Ollama model (e.g., `gemma3`, `mistral`).
 
 ## Installation
 
@@ -29,7 +29,7 @@ The app runs at http://localhost:3000.
 
 ## Usage
 
-1. Open the app in your browser at http://localhost:30000.
+1. Open the app in your browser at http://localhost:3000.
 2. Get the App ID from Google Play:
     - Go to https://play.google.com/store/
     - Search and open the app’s page.
@@ -59,4 +59,5 @@ The app runs at http://localhost:3000.
 - Can’t open the app: Ensure the server is running (`npm start`) and visit http://localhost:30000.
 - Model not found: Run `ollama list` to verify installed models, then install with `ollama pull <model>`.
 - Empty results: Confirm the App ID is correct and available in your selected language.
+
 

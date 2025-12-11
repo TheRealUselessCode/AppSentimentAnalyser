@@ -36,16 +36,17 @@ The app runs at http://localhost:3000.
     - Copy the `id=` value from the URL.
       - Example: For Clash Royale, `https://play.google.com/store/apps/details?id=com.supercell.clashroyale` → App ID is `com.supercell.clashroyale`.
 3. In the app, paste the App ID into the `Id` field.
-4. Click `Scrape Reviews`.
+4. Configure scraping:
     - Choose language.
     - Choose how many reviews to fetch (use a large number to get all).
+6. Click `Scrape Reviews`.
     - Wait until you see “Scrape finished.”
-5. Click `Clean`.
+7. Click `Clean`.
     - Wait until you see “Cleaning finished.”
-6. Configure analysis in the “Analysis” section:
+8. Configure analysis in the “Analysis” section:
     - Select your installed Ollama model.
     - Choose a chunk size (30 is a good default).
-7. Click `Analyze`.
+9. Click `Analyze`.
     - Wait until you see “Analyzing finished.” (may take a while).
 
 ## Tips
@@ -59,5 +60,6 @@ The app runs at http://localhost:3000.
 - Can’t open the app: Ensure the server is running (`npm start`) and visit http://localhost:30000.
 - Model not found: Run `ollama list` to verify installed models, then install with `ollama pull <model>`.
 - Empty results: Confirm the App ID is correct and available in your selected language.
+
 
 

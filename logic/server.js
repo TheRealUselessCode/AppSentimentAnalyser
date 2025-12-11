@@ -34,13 +34,13 @@ app.get('/reviews_clean.json', (req, res) => {
     }
 });
 
-app.get('/reviews_analysis.json', (req, res) => {
+app.get('/reviews_analysis.md', (req, res) => {
     try {
-        const data = fs.readFileSync('./data/reviews_analysis.json', 'utf8');
-        res.setHeader('Content-Type', 'application/json');
+        const data = fs.readFileSync('./data/reviews_analysis.md', 'utf8');
+        res.setHeader('Content-Type', 'text/markdown');
         res.status(200).send(data);
     } catch (error) {
-        res.status(404).json({ error: 'reviews_analysis.json not found' });
+        res.status(404).json({ error: 'reviews_analysis.md not found' });
     }
 });
 

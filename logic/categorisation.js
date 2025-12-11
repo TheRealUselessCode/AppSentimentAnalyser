@@ -21,7 +21,7 @@ export async function analyzeReviews(languageModel = "gemma3", chunkSize = 30) {
     }
 
     const merged = await mergeAllReviews(results, languageModel);
-    fs.writeFileSync("./data/reviews_analysis.json", JSON.stringify({ merged }, null, 2));
+    fs.writeFileSync("./data/reviews_analysis.md", merged, "utf8");
 
     console.log("DONE!");
 }

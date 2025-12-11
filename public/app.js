@@ -27,6 +27,16 @@ async function fetchJson(path) {
 	}
 }
 
+async function fetchText(path) {
+	try {
+		const res = await fetch(path);
+		if (!res.ok) return null;
+		return await res.text();
+	} catch {
+		return null;
+	}
+}
+
 async function refreshPreviews() {
 	const raw = await fetchJson('/reviews.json');
 	rawOut.value = raw ? JSON.stringify(raw, null, 2) : '';
@@ -34,8 +44,13 @@ async function refreshPreviews() {
 	const clean = await fetchJson('/reviews_clean.json');
 	cleanOut.value = clean ? JSON.stringify(clean, null, 2) : '';
 
-	const analysis = await fetchJson('/reviews_analysis.json');
-	analysisOut.value = analysis ? JSON.stringify(analysis, null, 2) : '';
+	const analysis = await fetchText('/reviews_analysis.md');
+	if (analysis) {
+		const html = window.marked ? window.marked.parse(analysis) : analysis;
+		analysisOut.innerHTML = html;
+	} else {
+		analysisOut.innerHTML = '';
+	}
 }
 
 btnScrape.addEventListener('click', async () => {

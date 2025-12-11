@@ -57,9 +57,10 @@ The app runs at http://localhost:3000.
 
 ## Troubleshooting
 
-- Can’t open the app: Ensure the server is running (`npm start`) and visit http://localhost:30000.
+- Can’t open the app: Ensure the server is running (`npm start`) and visit http://localhost:3000.
 - Model not found: Run `ollama list` to verify installed models, then install with `ollama pull <model>`.
 - Empty results: Confirm the App ID is correct and available in your selected language.
+
 
 
 

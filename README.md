@@ -2,7 +2,7 @@
 
 This app allows you to pull all of the reviews from an app in the Google-Play-Store, clean them and auto evaluate them with the help of an LLM.
 
-<img width="1093" height="939" alt="image" src="https://github.com/user-attachments/assets/91a2ddf3-9d1a-4b70-9edb-a334ca6e6881" />
+<img width="1063" height="1160" alt="image" src="https://github.com/user-attachments/assets/b93606b2-1e9f-4d9e-b34e-59f07df00a40" />
 
 ## How To Use:
 
@@ -43,3 +43,4 @@ This app allows you to pull all of the reviews from an app in the Google-Play-St
     2. Select an appropiate chunk size (30 seems to work well)
 12. Press `Analyze
 13. Wait for the app to say "Analysing finshed." (Note: it may take a good while)
+

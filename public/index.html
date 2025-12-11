@@ -1,92 +1,81 @@
 <!doctype html>
-<html lang="de">
+	<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Google Play Reviews Analyzer</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-		<style>
-			:root { --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --accent:#22c55e; --danger:#ef4444; }
-			* { box-sizing: border-box; }
-			body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
-			header { padding: 24px; text-align:center; }
-			h1 { margin:0; font-size: 22px; }
-			main { max-width: 980px; margin: 0 auto; padding: 16px; }
-			.card { background: var(--card); border: 1px solid #1f2937; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
-			.grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
-			label { display:block; font-size:13px; color: var(--muted); margin-bottom:6px; }
-			input, select, textarea { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #374151; background:#0b1220; color:var(--text); }
-			textarea { min-height: 140px; }
-			.actions { display:flex; gap:8px; flex-wrap:wrap; }
-			button { padding:10px 14px; border-radius:10px; border:1px solid #374151; background:#0b1220; color:var(--text); cursor:pointer; }
-			button.primary { background:#14532d; border-color:#166534; }
-			button.primary:hover { background:#166534; }
-			button.warn { background:#3f0d11; border-color:#7f1d1d; }
-			.status { font-size: 13px; color: var(--muted); }
-			.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13px; }
-			.columns { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
-			@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .columns { grid-template-columns: 1fr; } }
-		</style>
+		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+		<link href="/styles.css" rel="stylesheet">
 	</head>
 	<body>
 		<header>
 			<h1>Google Play Reviews Analyzer</h1>
-			<div class="status" id="status">Bereit.</div>
+			<div class="status" id="status">Ready.</div>
 		</header>
 		<main>
 			<section class="card">
 				<div class="grid">
 					<div>
-						<label for="appId">App-ID (z. B. com.spotify.music)</label>
+						<label for="appId">App ID (e.g., com.spotify.music)</label>
 						<input id="appId" placeholder="com.example.app" />
 					</div>
 					<div>
-						<label for="language">Sprache</label>
+						<label for="language">Language</label>
 						<select id="language">
-							<option value="de">de</option>
 							<option value="en">en</option>
+							<option value="de">de</option>
 							<option value="fr">fr</option>
 							<option value="es">es</option>
+							<option value="it">it</option>
+							<option value="pt">pt</option>
+							<option value="nl">nl</option>
+							<option value="ru">ru</option>
+							<option value="tr">tr</option>
+							<option value="ar">ar</option>
+							<option value="hi">hi</option>
+							<option value="ja">ja</option>
+							<option value="ko">ko</option>
+							<option value="zh">zh</option>
 						</select>
 					</div>
 					<div>
-						<label for="num">Anzahl Reviews</label>
+						<label for="num">Number of Reviews</label>
 						<input id="num" type="number" min="1" max="5000" value="200" />
 					</div>
 				</div>
 				<div style="margin-top:12px" class="actions">
-					<button id="btnScrape" class="primary">Reviews scrapen</button>
-					<button id="btnClean">Bereinigen</button>
-					<button id="btnAnalyze">Analysieren</button>
+					<button id="btnScrape" class="primary">Scrape Reviews</button>
+					<button id="btnClean">Clean</button>
+					<button id="btnAnalyze">Analyze</button>
 				</div>
 			</section>
 
 			<section class="columns">
 				<div class="card">
-					<h3 style="margin:0 0 8px 0; font-size:16px;">Rohdaten</h3>
-					<textarea id="rawOut" class="mono" placeholder="Vorschau von reviews.json..."></textarea>
+					<h3 style="margin:0 0 8px 0; font-size:16px;">Raw Data</h3>
+					<textarea id="rawOut" class="mono" placeholder="Preview of reviews.json..." readonly></textarea>
 				</div>
 				<div class="card">
-					<h3 style="margin:0 0 8px 0; font-size:16px;">Bereinigt</h3>
-					<textarea id="cleanOut" class="mono" placeholder="Vorschau von reviews_clean.json..."></textarea>
+					<h3 style="margin:0 0 8px 0; font-size:16px;">Cleaned</h3>
+					<textarea id="cleanOut" class="mono" placeholder="Preview of reviews_clean.json..." readonly></textarea>
 				</div>
 			</section>
 
 			<section class="card">
-				<h3 style="margin:0 0 8px 0; font-size:16px;">Analyse</h3>
+				<h3 style="margin:0 0 8px 0; font-size:16px;">Analysis</h3>
 				<div class="grid">
 					<div>
-						<label for="model">Ollama-Modell</label>
+						<label for="model">Ollama Model</label>
 						<input id="model" value="gemma3" />
 					</div>
 					<div>
-						<label for="chunk">Chunk-Größe</label>
+						<label for="chunk">Chunk Size</label>
 						<input id="chunk" type="number" min="5" max="200" value="30" />
 					</div>
 				</div>
-				<textarea id="analysisOut" class="mono" style="margin-top:12px" placeholder="Vorschau von reviews_analysis.json..."></textarea>
+				<textarea id="analysisOut" class="mono" style="margin-top:12px" placeholder="Preview of reviews_analysis.json..." readonly></textarea>
 			</section>
 		</main>
 

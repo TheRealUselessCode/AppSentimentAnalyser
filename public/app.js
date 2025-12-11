@@ -28,14 +28,14 @@ async function fetchJson(path) {
 }
 
 async function refreshPreviews() {
-	const raw = await fetch('/reviews.json').then(r => r.ok ? r.text() : '');
-	rawOut.value = raw || '';
+	const raw = await fetchJson('/reviews.json');
+	rawOut.value = raw ? JSON.stringify(raw, null, 2) : '';
 
-	const clean = await fetch('/reviews_clean.json').then(r => r.ok ? r.text() : '');
-	cleanOut.value = clean || '';
+	const clean = await fetchJson('/reviews_clean.json');
+	cleanOut.value = clean ? JSON.stringify(clean, null, 2) : '';
 
-	const analysis = await fetch('/reviews_analysis.json').then(r => r.ok ? r.text() : '');
-	analysisOut.value = analysis || '';
+	const analysis = await fetchJson('/reviews_analysis.json');
+	analysisOut.value = analysis ? JSON.stringify(analysis, null, 2) : '';
 }
 
 btnScrape.addEventListener('click', async () => {
@@ -43,11 +43,11 @@ btnScrape.addEventListener('click', async () => {
 	const language = languageEl.value.trim();
 	const numberOfReviews = Number(numEl.value);
 	if (!appId) {
-		setStatus('Bitte App-ID angeben.');
+		setStatus('Please provide an App ID.');
 		return;
 	}
 
-	setStatus('Scrape läuft...');
+	setStatus('Scraping in progress...');
 	btnScrape.disabled = true; btnClean.disabled = true; btnAnalyze.disabled = true;
 	try {
 		const res = await fetch('/api/scrape-reviews', {
@@ -56,29 +56,29 @@ btnScrape.addEventListener('click', async () => {
 			body: JSON.stringify({ appId, numberOfReviews, language })
 		});
 		const data = await res.json();
-		if (!res.ok) throw new Error(data?.error || 'Fehler beim Scrapen');
-		setStatus('Scrape fertig.');
+		if (!res.ok) throw new Error(data?.error || 'Error while scraping');
+		setStatus('Scrape finished.');
 		await refreshPreviews();
 	} catch (e) {
 		console.error(e);
-		setStatus('Fehler: ' + e.message);
+		setStatus('Error: ' + e.message);
 	} finally {
 		btnScrape.disabled = false; btnClean.disabled = false; btnAnalyze.disabled = false;
 	}
 });
 
 btnClean.addEventListener('click', async () => {
-	setStatus('Bereinigung läuft...');
+	setStatus('Cleaning in progress...');
 	btnScrape.disabled = true; btnClean.disabled = true; btnAnalyze.disabled = true;
 	try {
 		const res = await fetch('/api/clean-reviews', { method: 'POST' });
 		const data = await res.json();
-		if (!res.ok) throw new Error(data?.error || 'Fehler bei der Bereinigung');
-		setStatus('Bereinigung fertig.');
+		if (!res.ok) throw new Error(data?.error || 'Error while cleaning');
+		setStatus('Cleaning finished.');
 		await refreshPreviews();
 	} catch (e) {
 		console.error(e);
-		setStatus('Fehler: ' + e.message);
+		setStatus('Error: ' + e.message);
 	} finally {
 		btnScrape.disabled = false; btnClean.disabled = false; btnAnalyze.disabled = false;
 	}
@@ -87,7 +87,7 @@ btnClean.addEventListener('click', async () => {
 btnAnalyze.addEventListener('click', async () => {
 	const languageModel = modelEl.value.trim() || 'gemma3';
 	const chunkSize = Number(chunkEl.value) || 30;
-	setStatus('Analyse läuft... (Ollama)');
+	setStatus('Analysis in progress... (Ollama)');
 	btnScrape.disabled = true; btnClean.disabled = true; btnAnalyze.disabled = true;
 	try {
 		const res = await fetch('/api/analyze-reviews', {
@@ -96,12 +96,12 @@ btnAnalyze.addEventListener('click', async () => {
 			body: JSON.stringify({ languageModel, chunkSize })
 		});
 		const data = await res.json();
-		if (!res.ok) throw new Error(data?.error || 'Fehler bei der Analyse');
-		setStatus('Analyse fertig.');
+		if (!res.ok) throw new Error(data?.error || 'Error during analysis');
+		setStatus('Analysis finished.');
 		await refreshPreviews();
 	} catch (e) {
 		console.error(e);
-		setStatus('Fehler: ' + e.message);
+		setStatus('Error: ' + e.message);
 	} finally {
 		btnScrape.disabled = false; btnClean.disabled = false; btnAnalyze.disabled = false;
 	}

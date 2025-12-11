@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import fs from 'fs';
 import { cleanReviews } from './cleaner.js';
 import { getReviews } from './scraper.js';
 import { analyzeReviews } from './categorisation.js';
@@ -11,6 +12,37 @@ app.use(express.json());
 app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
+
+// Preview endpoints for JSON files stored in /data
+app.get('/reviews.json', (req, res) => {
+    try {
+        const data = fs.readFileSync('./data/reviews.json', 'utf8');
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(404).json({ error: 'reviews.json not found' });
+    }
+});
+
+app.get('/reviews_clean.json', (req, res) => {
+    try {
+        const data = fs.readFileSync('./data/reviews_clean.json', 'utf8');
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(404).json({ error: 'reviews_clean.json not found' });
+    }
+});
+
+app.get('/reviews_analysis.json', (req, res) => {
+    try {
+        const data = fs.readFileSync('./data/reviews_analysis.json', 'utf8');
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(404).json({ error: 'reviews_analysis.json not found' });
+    }
+});
 
 app.post('/api/scrape-reviews', async (req, res) => {
     const { appId, numberOfReviews, language } = req.body;

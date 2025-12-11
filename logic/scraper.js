@@ -2,7 +2,7 @@ import gplay from "google-play-scraper";
 import fs from "fs";
 
 /**
- * Scraped die Reviews einer App aus dem Google Play Store und speichert sie in reviews.json.
+ * Scrapes app reviews from the Google Play Store and saves them to reviews.json.
  */
 
 export async function getReviews(appId, numberOfReviews, language) {
@@ -13,12 +13,12 @@ export async function getReviews(appId, numberOfReviews, language) {
     lang: language,
   });
 
-  // komplette Antwort in eine JSON-Datei schreiben
+  // Write the full response to a JSON file
   fs.writeFileSync(
     "./data/reviews.json",
-    JSON.stringify(data, null, 2),   // schön formatiert
+    JSON.stringify(data, null, 2),   // nicely formatted
     "utf8"
   );
 
-  console.log("Fertig! reviews.json wurde erstellt.");
+  console.log("Done! reviews.json has been created.");
 }

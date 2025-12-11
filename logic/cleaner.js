@@ -1,12 +1,12 @@
 import fs from "fs";
 
 /**
- * Lädt die Rohdaten aus reviews.json, bereinigt die Reviews und gibt sie als JSON-Datei aus.
+ * Loads raw data from reviews.json, cleans the reviews, and outputs them as a JSON file.
  */
 
 export function cleanReviews() {
   const raw = JSON.parse(fs.readFileSync("./data/reviews.json", "utf8"));
-  const reviews = raw.data || raw;   // Falls Struktur unterschiedlich ist
+  const reviews = raw.data || raw;   // In case the structure differs
 
   const cleaned = reviews.map(r => ({
     id: r.id,
@@ -19,5 +19,5 @@ export function cleanReviews() {
 
   fs.writeFileSync("./data/reviews_clean.json", JSON.stringify(cleaned, null, 2), "utf8");
 
-  console.log("Fertig! reviews_clean.json wurde erstellt.");
+  console.log("Done! reviews_clean.json has been created.");
 }

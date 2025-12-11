@@ -41,7 +41,8 @@ This app allows you to pull all of the reviews from an app in the Google-Play-St
 11. Configure your analysis under the "Analysis" card in the bottom
     1. Choose your model (make sure you have it installed)
     2. Select an appropiate chunk size (30 seems to work well)
-12. Press `Analyze
-13. Wait for the app to say "Analysing finshed." (Note: it may take a good while)
+12. Press `Analyze`
+13. Wait for the app to say "Analysing finshed." (**Note: it may take a good while**)
+
 
 
